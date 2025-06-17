@@ -24,6 +24,8 @@
   <arg name="InclFittingThre" default="0.2"/>
   <arg name="maxIncl" default="30.0"/>
 
+  <arg name="planner" default="Tare"/> <!--  ARiadne, Tare, ... -->
+ 
   <arg name="paused" default="false"/>
   <arg name="use_sim_time" default="true"/>
   <arg name="gui" default="false"/>
@@ -61,6 +63,8 @@
   </node> 
 
   <node pkg="vehicle_simulator" type="vehicleSimulator" name="vehicleSimulator" output="screen" required="true">
+    <param name="planner" value="$(arg planner)"/>
+    
     <param name="use_gazebo_time" type="bool" value="false" />
     <param name="sensorOffsetX" value="$(arg sensorOffsetX)" />
     <param name="sensorOffsetY" value="$(arg sensorOffsetY)" />

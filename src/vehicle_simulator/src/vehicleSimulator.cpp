@@ -34,6 +34,11 @@ using namespace std;
 
 const double PI = 3.1415926;
 
+
+bool CreateFakePointsVertical = true; 
+bool CreateFakePointsFloor = true; 
+
+string planner = "Tare";
 bool use_gazebo_time = false;
 double cameraOffsetZ = 0;
 double sensorOffsetX = 0;
@@ -153,9 +158,7 @@ void scanHandler(const sensor_msgs::PointCloud2::ConstPtr& scanIn)
 
   int scanDataSize = scanData->points.size();
 
- bool CreateFakePoints = true; 
-
-  if(CreateFakePoints)
+  if(CreateFakePointsVertical)
   { 
     for (int i = 0; i < scanDataSize; i++)
     {
@@ -174,6 +177,10 @@ void scanHandler(const sensor_msgs::PointCloud2::ConstPtr& scanIn)
       }
     }  
 
+  }
+
+  if(CreateFakePointsFloor)
+  {
     for (int i = 0; i < scanDataSize; i++) 
     {
       float x = scanData->points[i].x;
@@ -191,8 +198,10 @@ void scanHandler(const sensor_msgs::PointCloud2::ConstPtr& scanIn)
         scanData->push_back(freePt);
       }
     }
-    scanDataSize = scanData->points.size();
   }
+  
+  scanDataSize = scanData->points.size();
+  
 
 
   for (int i = 0; i < scanDataSize; i++)
@@ -349,6 +358,31 @@ int main(int argc, char** argv)
   ros::init(argc, argv, "vehicleSimulator");
   ros::NodeHandle nh;
   ros::NodeHandle nhPrivate = ros::NodeHandle("~");
+
+  nhPrivate.getParam("planner", planner);
+
+  if(planner == "Tare")
+  {
+    // Tare Planner needs seems to need vertical layers to work
+    CreateFakePointsVertical = true;
+    // It seemed to work without florr but exploration gets stopped way to early without floor
+    CreateFakePointsFloor = true; 
+    
+  }
+  else if(planner == "ARiadne")
+  {
+    // ARiadne seemed to work without vertical layers but crashes after a while wiihtout 
+    CreateFakePointsVertical = true;
+    // ARiadne crashes with floor
+    CreateFakePointsFloor = false;
+  }
+  else
+  {
+    CreateFakePointsVertical = false;
+    CreateFakePointsFloor = false;
+  }
+
+  std::cout << "Planner set to: " << planner << std::endl; 
 
   nhPrivate.getParam("use_gazebo_time", use_gazebo_time);
   nhPrivate.getParam("cameraOffsetZ", cameraOffsetZ);
