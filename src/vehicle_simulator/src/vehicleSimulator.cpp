@@ -152,6 +152,32 @@ void scanHandler(const sensor_msgs::PointCloud2::ConstPtr& scanIn)
   pcl::removeNaNFromPointCloud(*scanData, *scanData, scanInd);
 
   int scanDataSize = scanData->points.size();
+  
+  bool CreateFakePoints = true; 
+
+  if(CreateFakePoints)
+  { 
+    for (int i = 0; i < scanDataSize; i++)
+    {
+      float pointX0 = scanData->points[i].x;
+      float pointY0 = scanData->points[i].y;
+      float pointZ0 = 0;
+
+      for (int layer = 0; layer < 15; layer++) 
+      {
+          pcl::PointXYZI newPoint;
+          newPoint.x = pointX0;
+          newPoint.y = pointY0;
+          newPoint.z = pointZ0 - 0.05f * layer; 
+          newPoint.intensity = scanData->points[i].intensity; 
+          scanData->push_back(newPoint);
+      }
+    }  
+    scanDataSize = scanData->points.size();
+  }
+
+  
+
   for (int i = 0; i < scanDataSize; i++)
   {
     float pointX1 = scanData->points[i].x;
@@ -328,7 +354,7 @@ int main(int argc, char** argv)
   nhPrivate.getParam("InclFittingThre", InclFittingThre);
   nhPrivate.getParam("maxIncl", maxIncl);
 
-  ros::Subscriber subScan = nh.subscribe<sensor_msgs::PointCloud2>("/velodyne_points", 2, scanHandler);
+  ros::Subscriber subScan = nh.subscribe<sensor_msgs::PointCloud2>("/lidar2D_points", 2, scanHandler);
 
   ros::Subscriber subTerrainCloud = nh.subscribe<sensor_msgs::PointCloud2>("/terrain_map", 2, terrainCloudHandler);
 
