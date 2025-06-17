@@ -10,12 +10,9 @@ public:
     {
         // Read parameters
         nh_private.param<std::string>("scan_topic", scan_topic_, "/lidar2D_scan");
-<<<<<<< HEAD
         nh_private.param<std::string>("cloud_topic", cloud_topic_, "/fake_points");
-=======
         nh_private.param<std::string>("cloud_topic", cloud_topic_, "/lidar2D_points");
->>>>>>> clear
-        nh_private.param<std::string>("target_frame", target_frame_, ""); // "" = use scan.header.frame_id
+        nh_private.param<std::string>("target_frame", target_frame_, "lidar2D_frame"); 
         int queue_size;
         nh_private.param<int>("queue_size", queue_size, 10);
 
