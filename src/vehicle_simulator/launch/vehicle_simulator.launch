@@ -56,7 +56,7 @@
 
   <node pkg="scan_to_pc" type="scan_to_pc" name="scan_to_pc" output="screen">
     <param name="scan_topic" value="/lidar2D_scan"/>           
-    <param name="cloud_topic" value="/fake_points"/>  
+    <param name="cloud_topic" value="/lidar2D_points"/>  
     <param name="target_frame" value="lidar2D_frame"/>   
   </node> 
 
