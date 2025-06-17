@@ -2,7 +2,7 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="lidar2d_robot">
 
 
-  <link name="lidar_holder2D">
+  <link name="lidar2D_frame">
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
@@ -25,7 +25,7 @@
   </link>
 
   <!-- Gazebo plugin attached to lidar_holder2D -->
-  <gazebo reference="lidar_holder2D">
+  <gazebo reference="lidar2D_frame">
     <material>Gazebo/Red</material>
 
     <sensor name="laser" type="ray">
@@ -46,9 +46,9 @@
         </range>
       </ray>
       <plugin name="laser_controller" filename="libgazebo_ros_laser.so">
-        <topicName>scan</topicName>
+        <topicName>lidar2D_scan</topicName>
         <output_type>sensor_msgs/LaserScan</output_type>
-        <frameName>lidar_holder2D</frameName>
+        <frameName>lidar2D_frame</frameName>
       </plugin>
     </sensor>
   </gazebo>

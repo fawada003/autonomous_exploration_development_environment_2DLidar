@@ -448,7 +448,7 @@ int main(int argc, char** argv)
       // Only send if it’s strictly later than the last one
       tf::StampedTransform lidarTrans;
       lidarTrans.frame_id_        = "map";
-      lidarTrans.child_frame_id_  = "lidar_holder2D";
+      lidarTrans.child_frame_id_  = "lidar2D_frame";
       lidarTrans.stamp_           = current_stamp;
       lidarTrans.setOrigin(tf::Vector3(vehicleX, vehicleY, vehicleZ + 0.2));
       lidarTrans.setRotation(tf::createQuaternionFromRPY(0, 0, 0));
