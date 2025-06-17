@@ -51,6 +51,9 @@
   <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find vehicle_simulator)/urdf/robot.urdf.xacro'" />
   <node pkg="gazebo_ros" type="spawn_model" name="spawn_robot" args="-urdf -param /robot_description -model robot"/>
 
+  <param name="lidar2D_description" command="$(find xacro)/xacro --inorder '$(find vehicle_simulator)/urdf/lidar2D.urdf.xacro'" />
+  <node pkg="gazebo_ros" type="spawn_model" name="spawn_lidar2D" args="-urdf -param /lidar2D_description -model lidar2D"/>
+
   <node pkg="vehicle_simulator" type="vehicleSimulator" name="vehicleSimulator" output="screen" required="true">
     <param name="use_gazebo_time" type="bool" value="false" />
     <param name="sensorOffsetX" value="$(arg sensorOffsetX)" />

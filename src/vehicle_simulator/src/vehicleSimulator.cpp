@@ -64,6 +64,7 @@ pcl::PointCloud<pcl::PointXYZI>::Ptr terrainCloudDwz(new pcl::PointCloud<pcl::Po
 std::vector<int> scanInd;
 
 ros::Time odomTime;
+ros::Time last_lidar_stamp(0, 0);
 
 float vehicleX = 0;
 float vehicleY = 0;
@@ -347,6 +348,8 @@ int main(int argc, char** argv)
   ros::Publisher pubModelState = nh.advertise<gazebo_msgs::ModelState>("/gazebo/set_model_state", 5);
   gazebo_msgs::ModelState cameraState;
   cameraState.model_name = "camera";
+  gazebo_msgs::ModelState lidar2DState;
+  lidar2DState.model_name = "lidar2D";
   gazebo_msgs::ModelState lidarState;
   lidarState.model_name = "lidar";
   gazebo_msgs::ModelState robotState;
@@ -433,6 +436,26 @@ int main(int argc, char** argv)
     pubModelState.publish(robotState);
 
     geoQuat = tf::createQuaternionMsgFromRollPitchYaw(terrainRoll, terrainPitch, 0);
+
+    lidar2DState.pose.orientation = geoQuat;
+    lidar2DState.pose.position.x = vehicleX;
+    lidar2DState.pose.position.y = vehicleY;
+    lidar2DState.pose.position.z = vehicleZ;
+    pubModelState.publish(lidar2DState);
+
+    ros::Time current_stamp = ros::Time::now();
+    if (current_stamp != last_lidar_stamp) {
+      // Only send if it’s strictly later than the last one
+      tf::StampedTransform lidarTrans;
+      lidarTrans.frame_id_        = "map";
+      lidarTrans.child_frame_id_  = "lidar_holder2D";
+      lidarTrans.stamp_           = current_stamp;
+      lidarTrans.setOrigin(tf::Vector3(vehicleX, vehicleY, vehicleZ + 0.2));
+      lidarTrans.setRotation(tf::createQuaternionFromRPY(0, 0, 0));
+      tfBroadcaster.sendTransform(lidarTrans);
+
+      last_lidar_stamp = current_stamp;
+    }
 
     lidarState.pose.orientation = geoQuat;
     lidarState.pose.position.x = vehicleX;
