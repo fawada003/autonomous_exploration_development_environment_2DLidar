@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+
+<package>
+    <name>scan_to_pc</name>
+    <version>0.0.1</version>
+    <description>Laser to pointcloud</description>
+    <maintainer email="fabian.wagner@student.kit.edu">Fabian Wagner</maintainer>
+     <license>BSD</license>
+
+    <buildtool_depend>catkin</buildtool_depend>
+
+    <build_depend>laser_geometry</build_depend>
+    <run_depend>laser_geometry</run_depend>
+    <build_depend>sensor_msgs</build_depend>
+
+    <run_depend>laser_geometry</run_depend>
+    <run_depend>sensor_msgs</run_depend>
+</package>
