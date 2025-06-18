@@ -38,7 +38,7 @@ const double PI = 3.1415926;
 bool CreateFakePointsVertical = true; 
 bool CreateFakePointsFloor = true; 
 
-string planner = "Tare";
+string planner = "";
 bool use_gazebo_time = false;
 double cameraOffsetZ = 0;
 double sensorOffsetX = 0;
@@ -166,7 +166,7 @@ void scanHandler(const sensor_msgs::PointCloud2::ConstPtr& scanIn)
       float pointY0 = scanData->points[i].y;
       float pointZ0 = 0;
 
-      for (int layer = 0; layer < 15; layer++) 
+      for (int layer = -25; layer < floor(2 * vehicleHeight * 10) + 1; layer++) 
       {
           pcl::PointXYZI newPoint;
           newPoint.x = pointX0;
@@ -193,7 +193,7 @@ void scanHandler(const sensor_msgs::PointCloud2::ConstPtr& scanIn)
         pcl::PointXYZI freePt;
         freePt.x = x * frac;
         freePt.y = y * frac;
-        freePt.z = -0.7f;
+        freePt.z = -vehicleHeight;
         freePt.intensity = scanData->points[i].intensity; 
         scanData->push_back(freePt);
       }
@@ -201,7 +201,6 @@ void scanHandler(const sensor_msgs::PointCloud2::ConstPtr& scanIn)
   }
   
   scanDataSize = scanData->points.size();
-  
 
 
   for (int i = 0; i < scanDataSize; i++)
@@ -361,17 +360,17 @@ int main(int argc, char** argv)
 
   nhPrivate.getParam("planner", planner);
 
-  if(planner == "Tare")
+  if((planner == "Tare") || (planner == "CreateFloorAndVertical"))
   {
-    // Tare Planner needs seems to need vertical layers to work
+    // Tare Planner needs seems to need vertical layers to work testing shows that solid behavior can be reached by extending to floor and maybe 1 meter in the direciton of the ceiling 
     CreateFakePointsVertical = true;
-    // It seemed to work without florr but exploration gets stopped way to early without floor
+    // It seemed to work without floor but exploration gets stopped way to early without floor
     CreateFakePointsFloor = true; 
     
   }
-  else if(planner == "ARiadne")
+  else if(planner == "ARiadne" || planner == "CreateOnlyVertical")
   {
-    // ARiadne seemed to work without vertical layers but crashes after a while wiihtout 
+    // ARiadne seemed to work without vertical layers but crashes after a while without 
     CreateFakePointsVertical = true;
     // ARiadne crashes with floor
     CreateFakePointsFloor = false;

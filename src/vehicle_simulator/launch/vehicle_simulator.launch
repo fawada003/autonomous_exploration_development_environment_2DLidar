@@ -24,7 +24,7 @@
   <arg name="InclFittingThre" default="0.2"/>
   <arg name="maxIncl" default="30.0"/>
 
-  <arg name="planner" default="Tare"/> <!--  ARiadne, Tare, ... -->
+  <arg name="planner" default="Tare"/> <!--  ARiadne, Tare, CreateOnlyVertical, CreateFloorAndVertical... -->
  
   <arg name="paused" default="false"/>
   <arg name="use_sim_time" default="true"/>
