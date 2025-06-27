@@ -1,0 +1,4 @@
+Symlinking /home/fawada/autonomous_exploration_development_environment_2DLidar/devel/lib/pkgconfig/loam_interface.pc
+Symlinking /home/fawada/autonomous_exploration_development_environment_2DLidar/devel/lib/loam_interface/loamInterface
+Symlinking /home/fawada/autonomous_exploration_development_environment_2DLidar/devel/share/loam_interface/cmake/loam_interfaceConfig-version.cmake
+Symlinking /home/fawada/autonomous_exploration_development_environment_2DLidar/devel/share/loam_interface/cmake/loam_interfaceConfig.cmake

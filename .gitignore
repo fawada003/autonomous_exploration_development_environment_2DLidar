@@ -26,3 +26,4 @@ src/vehicle_simulator/log/*
 
 !readme.txt
 .vscode
+.catkin_tools/

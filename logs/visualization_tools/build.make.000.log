@@ -1,0 +1,3 @@
+[ 50%] [32mBuilding CXX object CMakeFiles/visualizationTools.dir/src/visualizationTools.cpp.o[0m
+[100%] [32m[1mLinking CXX executable /home/fawada/autonomous_exploration_development_environment_2DLidar/devel/.private/visualization_tools/lib/visualization_tools/visualizationTools[0m
+[100%] Built target visualizationTools

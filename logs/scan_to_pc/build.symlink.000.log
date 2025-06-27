@@ -1,0 +1,4 @@
+Symlinking /home/fawada/autonomous_exploration_development_environment_2DLidar/devel/lib/pkgconfig/scan_to_pc.pc
+Symlinking /home/fawada/autonomous_exploration_development_environment_2DLidar/devel/lib/scan_to_pc/scan_to_pc
+Symlinking /home/fawada/autonomous_exploration_development_environment_2DLidar/devel/share/scan_to_pc/cmake/scan_to_pcConfig-version.cmake
+Symlinking /home/fawada/autonomous_exploration_development_environment_2DLidar/devel/share/scan_to_pc/cmake/scan_to_pcConfig.cmake

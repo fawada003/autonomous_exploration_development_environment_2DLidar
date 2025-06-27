@@ -1,0 +1,3 @@
+[ 50%] [32mBuilding CXX object CMakeFiles/terrainAnalysis.dir/src/terrainAnalysis.cpp.o[0m
+[100%] [32m[1mLinking CXX executable /home/fawada/autonomous_exploration_development_environment_2DLidar/devel/.private/terrain_analysis/lib/terrain_analysis/terrainAnalysis[0m
+[100%] Built target terrainAnalysis

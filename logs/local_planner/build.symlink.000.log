@@ -1,0 +1,5 @@
+Symlinking /home/fawada/autonomous_exploration_development_environment_2DLidar/devel/lib/local_planner/pathFollower
+Symlinking /home/fawada/autonomous_exploration_development_environment_2DLidar/devel/lib/local_planner/localPlanner
+Symlinking /home/fawada/autonomous_exploration_development_environment_2DLidar/devel/lib/pkgconfig/local_planner.pc
+Symlinking /home/fawada/autonomous_exploration_development_environment_2DLidar/devel/share/local_planner/cmake/local_plannerConfig.cmake
+Symlinking /home/fawada/autonomous_exploration_development_environment_2DLidar/devel/share/local_planner/cmake/local_plannerConfig-version.cmake

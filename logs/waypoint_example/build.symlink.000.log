@@ -1,0 +1,4 @@
+Symlinking /home/fawada/autonomous_exploration_development_environment_2DLidar/devel/lib/waypoint_example/waypointExample
+Symlinking /home/fawada/autonomous_exploration_development_environment_2DLidar/devel/lib/pkgconfig/waypoint_example.pc
+Symlinking /home/fawada/autonomous_exploration_development_environment_2DLidar/devel/share/waypoint_example/cmake/waypoint_exampleConfig-version.cmake
+Symlinking /home/fawada/autonomous_exploration_development_environment_2DLidar/devel/share/waypoint_example/cmake/waypoint_exampleConfig.cmake
