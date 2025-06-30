@@ -1,4 +1,0 @@
-[35m[1mScanning dependencies of target scan_to_pc[0m
-[ 50%] [32mBuilding CXX object CMakeFiles/scan_to_pc.dir/src/scan_to_pc.cpp.o[0m
-[100%] [32m[1mLinking CXX executable /home/fawada/autonomous_exploration_development_environment_2DLidar/devel/.private/scan_to_pc/lib/scan_to_pc/scan_to_pc[0m
-[100%] Built target scan_to_pc

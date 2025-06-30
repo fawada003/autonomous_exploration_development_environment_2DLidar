@@ -1,5 +1,9 @@
 	<launch>
-		<node pkg="octomap_server" type="octomap_server_node" name="octomap_server" output="screen">
+		
+		<arg name="planner" default="AriADNE"/>
+
+		<node pkg="octomap_server" type="octomap_server_node" name="octomap_server" output="screen"
+		if="$(eval arg('planner') == 'Tare')">
   			<param name="resolution" value="0.05" />
  			<param name="frame_id" value="map" />
  			<param name="sensor_model/max_range" value="70.0" />
@@ -7,7 +11,7 @@
 		</node>
 
 		<node pkg="custom_octomap_saver" type="custom_octomap_saver" name="custom_octomap_saver" output="screen">
-  		
+
 		</node>
 
 	

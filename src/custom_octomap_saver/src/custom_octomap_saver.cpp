@@ -5,12 +5,26 @@
 #include <tf/tf.h>
 #include <opencv2/imgcodecs.hpp>
 
+std::string planner; 
+std::string map_topic_name;
+
 class MapSaver
 {
 public:
   MapSaver(ros::NodeHandle& nh)
   {
-    map_sub_    = nh.subscribe("/projected_map", 1, &MapSaver::mapCallback, this);
+    ros::NodeHandle pnh("~");
+    pnh.getParam("planner", planner);
+
+    if(planner == "Tare" || planner =="ARiADNE")
+      map_topic_name = "projected_map";
+    else if(planner == "HPHS")
+      map_topic_name = "map";
+    else 
+      map_topic_name = "projected_map";
+
+
+    map_sub_    = nh.subscribe(map_topic_name, 1, &MapSaver::mapCallback, this);
     save_srv_   = nh.advertiseService("save_projected_map", &MapSaver::saveService, this);
     has_map_    = false;
   }
@@ -31,7 +45,7 @@ private:
     if (!has_map_)
     {
       res.success = false;
-      res.message = "No map received yet";
+      res.message = "No map received yet, Planner is set to: " + planner;
       return true;
     }
 
@@ -82,8 +96,8 @@ private:
 };
 
 int main(int argc, char** argv)
-{
-  ros::init(argc, argv, "projected_map_saver");
+{ 
+  ros::init(argc, argv, "projected_map_saver");  
   ros::NodeHandle nh;
   MapSaver saver(nh);
   ROS_INFO("projected_map_saver is ready; call service /save_projected_map to dump the map.");

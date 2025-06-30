@@ -1,4 +1,0 @@
-[35m[1mScanning dependencies of target vehicleSimulator[0m
-[ 50%] [32mBuilding CXX object CMakeFiles/vehicleSimulator.dir/src/vehicleSimulator.cpp.o[0m
-[100%] [32m[1mLinking CXX executable /home/fawada/autonomous_exploration_development_environment_2DLidar/devel/.private/vehicle_simulator/lib/vehicle_simulator/vehicleSimulator[0m
-[100%] Built target vehicleSimulator

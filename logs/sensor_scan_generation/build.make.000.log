@@ -1,3 +1,0 @@
-[ 50%] [32mBuilding CXX object CMakeFiles/sensorScanGeneration.dir/src/sensorScanGeneration.cpp.o[0m
-[100%] [32m[1mLinking CXX executable /home/fawada/autonomous_exploration_development_environment_2DLidar/devel/.private/sensor_scan_generation/lib/sensor_scan_generation/sensorScanGeneration[0m
-[100%] Built target sensorScanGeneration

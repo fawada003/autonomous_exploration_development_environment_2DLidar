@@ -22,6 +22,12 @@ src/vehicle_simulator/mesh/matterport/preview/*
 
 src/vehicle_simulator/log/*
 
+src/vehicle_simulator/logs/*
+
+logs/*
+
+log/*
+
 !download_environments.sh
 
 !readme.txt

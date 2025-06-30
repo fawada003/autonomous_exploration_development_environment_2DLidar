@@ -360,7 +360,7 @@ int main(int argc, char** argv)
 
   nhPrivate.getParam("planner", planner);
 
-  if((planner == "Tare") || (planner == "CreateFloorAndVertical"))
+  if((planner == "Tare") || (planner == "HPHS") || (planner == "CreateFloorAndVertical"))
   {
     // Tare Planner needs seems to need vertical layers to work testing shows that solid behavior can be reached by extending to floor and maybe 1 meter in the direciton of the ceiling 
     CreateFakePointsVertical = true;
