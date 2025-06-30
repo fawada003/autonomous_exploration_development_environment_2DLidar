@@ -25,6 +25,7 @@
   <arg name="maxIncl" default="30.0"/>
 
   <arg name="planner" default="ARiadne"/> <!--  ARiadne, Tare, CreateOnlyVertical, CreateFloorAndVertical... -->
+  <arg name="lidar" default="twod"/>    <!--    twod, threed -->
  
   <arg name="paused" default="false"/>
   <arg name="use_sim_time" default="true"/>
@@ -64,6 +65,7 @@
 
   <node pkg="vehicle_simulator" type="vehicleSimulator" name="vehicleSimulator" output="screen" required="true">
     <param name="planner" value="$(arg planner)"/>
+    <param name="lidar" value="$(arg lidar)"/>
     
     <param name="use_gazebo_time" type="bool" value="false" />
     <param name="sensorOffsetX" value="$(arg sensorOffsetX)" />

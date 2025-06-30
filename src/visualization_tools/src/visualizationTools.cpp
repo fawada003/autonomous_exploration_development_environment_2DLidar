@@ -281,12 +281,18 @@ int main(int argc, char** argv)
   bool status = ros::ok();
   while (status) {
     ros::spinOnce();
-
     overallMapDisplayCount++;
     if (overallMapDisplayCount >= 100 * overallMapDisplayInterval) {
       overallMap2.header.stamp = ros::Time().fromSec(systemTime);
       overallMap2.header.frame_id = "map";
       pubOverallMap.publish(overallMap2);
+
+      ros::ServiceClient client = nh.serviceClient<std_srvs::Trigger>("save_projected_map");
+      std_srvs::Trigger srv;
+      if (client.call(srv) && srv.response.success)
+        ROS_INFO("Save succeeded: %s", srv.response.message.c_str());
+      else
+        ROS_WARN("Save failed: %s", srv.response.message.c_str());
 
       overallMapDisplayCount = 0;
     }
@@ -294,19 +300,9 @@ int main(int argc, char** argv)
     status = ros::ok();
     rate.sleep();
   }
-
   
   fclose(metricFilePtr);
   fclose(trajFilePtr);
-
-  ros::NodeHandle nh1;
-  ros::ServiceClient client = nh1.serviceClient<std_srvs::Trigger>("save_projected_map");
-  std_srvs::Trigger srv;
-  if (client.call(srv) && srv.response.success)
-    ROS_INFO("Save succeeded: %s", srv.response.message.c_str());
-  else
-    ROS_WARN("Save failed: %s", srv.response.message.c_str());
-  return 0;
 
   printf("\nExploration metrics and vehicle trajectory are saved in 'src/vehicle_simulator/log'.\n\n");
 

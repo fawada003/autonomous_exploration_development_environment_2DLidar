@@ -39,6 +39,8 @@ bool CreateFakePointsVertical = true;
 bool CreateFakePointsFloor = true; 
 
 string planner = "";
+string lidar = "";
+string lidarTopicName = "";
 bool use_gazebo_time = false;
 double cameraOffsetZ = 0;
 double sensorOffsetX = 0;
@@ -357,32 +359,9 @@ int main(int argc, char** argv)
   ros::init(argc, argv, "vehicleSimulator");
   ros::NodeHandle nh;
   ros::NodeHandle nhPrivate = ros::NodeHandle("~");
-
+  
   nhPrivate.getParam("planner", planner);
-
-  if((planner == "Tare") || (planner == "HPHS") || (planner == "CreateFloorAndVertical"))
-  {
-    // Tare Planner needs seems to need vertical layers to work testing shows that solid behavior can be reached by extending to floor and maybe 1 meter in the direciton of the ceiling 
-    CreateFakePointsVertical = true;
-    // It seemed to work without floor but exploration gets stopped way to early without floor
-    CreateFakePointsFloor = true; 
-    
-  }
-  else if(planner == "ARiadne" || planner == "CreateOnlyVertical")
-  {
-    // ARiadne seemed to work without vertical layers but crashes after a while without 
-    CreateFakePointsVertical = true;
-    // ARiadne crashes with floor
-    CreateFakePointsFloor = false;
-  }
-  else
-  {
-    CreateFakePointsVertical = false;
-    CreateFakePointsFloor = false;
-  }
-
-  std::cout << "Planner set to: " << planner << std::endl; 
-
+  nhPrivate.getParam("lidar", lidar);
   nhPrivate.getParam("use_gazebo_time", use_gazebo_time);
   nhPrivate.getParam("cameraOffsetZ", cameraOffsetZ);
   nhPrivate.getParam("sensorOffsetX", sensorOffsetX);
@@ -404,13 +383,48 @@ int main(int argc, char** argv)
   nhPrivate.getParam("InclFittingThre", InclFittingThre);
   nhPrivate.getParam("maxIncl", maxIncl);
 
-  ros::Subscriber subScan = nh.subscribe<sensor_msgs::PointCloud2>("/lidar2D_points", 2, scanHandler);
+
+  if(lidar == "twod")
+    lidarTopicName = "/lidar2D_points";
+  else if(lidar == "threed")
+   lidarTopicName = "/velodyne_points";
+  else
+   lidarTopicName = "/lidar2D_points";
+  
+  ros::Subscriber subScan = nh.subscribe<sensor_msgs::PointCloud2>(lidarTopicName, 2, scanHandler);
+
+  std::cout << "Scan input is: " << lidarTopicName << std::endl; 
 
   ros::Subscriber subTerrainCloud = nh.subscribe<sensor_msgs::PointCloud2>("/terrain_map", 2, terrainCloudHandler);
 
   ros::Subscriber subSpeed = nh.subscribe<geometry_msgs::TwistStamped>("/cmd_vel", 5, speedHandler);
 
   ros::Publisher pubVehicleOdom = nh.advertise<nav_msgs::Odometry>("/state_estimation", 5);
+
+  if((lidar == "twod") && ((planner == "Tare") || (planner == "HPHS") || (planner == "CreateFloorAndVertical")))
+  {
+    // Tare Planner needs seems to need vertical layers to work testing shows that solid behavior can be reached by extending to floor and maybe 1 meter in the direciton of the ceiling 
+    CreateFakePointsVertical = true;
+    // It seemed to work without floor but exploration gets stopped way to early without floor
+    CreateFakePointsFloor = true; 
+    
+  }
+  else if((lidar == "twod") && (planner == "ARiadne" || planner == "CreateOnlyVertical"))
+  {
+    // ARiadne seemed to work without vertical layers but crashes after a while without 
+    CreateFakePointsVertical = true;
+    // ARiadne crashes with floor
+    CreateFakePointsFloor = false;
+  }
+  else
+  {
+    CreateFakePointsVertical = false;
+    CreateFakePointsFloor = false;
+  }
+  
+  std::cout << "Planner set to: " << planner << std::endl; 
+
+
 
   nav_msgs::Odometry odomData;
   odomData.header.frame_id = "map";

@@ -33,3 +33,4 @@ log/*
 !readme.txt
 .vscode
 .catkin_tools/
+projected_maps
