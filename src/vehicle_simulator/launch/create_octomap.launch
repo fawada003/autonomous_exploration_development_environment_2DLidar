@@ -1,0 +1,14 @@
+	<launch>
+		<node pkg="octomap_server" type="octomap_server_node" name="octomap_server" output="screen">
+  			<param name="resolution" value="0.05" />
+ 			<param name="frame_id" value="map" />
+ 			<param name="sensor_model/max_range" value="70.0" />
+  			<remap from="cloud_in" to="/lidar2D_points" />
+		</node>
+
+		<node pkg="custom_octomap_saver" type="custom_octomap_saver" name="custom_octomap_saver" output="screen">
+  		
+		</node>
+
+	
+	</launch>

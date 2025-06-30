@@ -89,4 +89,8 @@
     <param name="maxIncl" value="$(arg maxIncl)" />
   </node>
 
+
+  <include file="$(find vehicle_simulator)/launch/create_octomap.launch" >
+  </include>
+
 </launch>

@@ -24,6 +24,8 @@
 #include <pcl/filters/voxel_grid.h>
 #include <pcl/kdtree/kdtree_flann.h>
 
+#include <std_srvs/Trigger.h>
+
 using namespace std;
 
 const double PI = 3.1415926;
@@ -293,8 +295,18 @@ int main(int argc, char** argv)
     rate.sleep();
   }
 
+  
   fclose(metricFilePtr);
   fclose(trajFilePtr);
+
+  ros::NodeHandle nh1;
+  ros::ServiceClient client = nh1.serviceClient<std_srvs::Trigger>("save_projected_map");
+  std_srvs::Trigger srv;
+  if (client.call(srv) && srv.response.success)
+    ROS_INFO("Save succeeded: %s", srv.response.message.c_str());
+  else
+    ROS_WARN("Save failed: %s", srv.response.message.c_str());
+  return 0;
 
   printf("\nExploration metrics and vehicle trajectory are saved in 'src/vehicle_simulator/log'.\n\n");
 
